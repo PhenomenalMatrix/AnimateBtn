@@ -11,6 +11,7 @@ import com.mrflaitx.animatebtn.databinding.ActivityMainBinding;
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
+    private Boolean isOpened = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,17 +20,47 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         setStartTransparent();
         initListeners();
-
-
     }
 
     private void initListeners() {
         binding.animateBtn.setOnClickListener(v -> {
-            openContainer();
+            if(!isOpened) {
+                openContainer();
+            }else {
+                closeContainer();
+            }
         });
     }
 
+    private void closeContainer() {
+        isOpened = false;
+        binding.containerForViews.animate().scaleX(0).setDuration(200).start();
+        binding.containerForViews.animate().scaleY(0).setDuration(200).setListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animator) {
+                binding.itemView.setVisibility(View.GONE);
+                binding.itemView2.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animator) {
+
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animator) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animator) {
+
+            }
+        }).start();
+    }
+
     private void openContainer() {
+        isOpened = true;
         binding.containerForViews.animate().scaleX(1).setDuration(200).start();
         binding.containerForViews.animate().scaleY(1).setDuration(200).setListener(new Animator.AnimatorListener() {
             @Override
