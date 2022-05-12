@@ -19,6 +19,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         setStartTransparent();
         initListeners();
+
+
     }
 
     private void initListeners() {
